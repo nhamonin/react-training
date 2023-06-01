@@ -18,13 +18,14 @@ function Instructions() {
 }
 
 class PlayerInput extends React.Component {
-  constructor(props) {
-    super(props);
+  state = {
+    username: '',
+  };
 
-    this.state = {
-      username: '',
-    };
-  }
+  static propTypes = {
+    onSubmit: PropTypes.func.isRequired,
+    label: PropTypes.string.isRequired,
+  };
 
   handleSubmit = (event) => {
     event.preventDefault();
@@ -66,11 +67,6 @@ class PlayerInput extends React.Component {
   }
 }
 
-PlayerInput.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-  label: PropTypes.string.isRequired,
-};
-
 function PlayerPreview({ username, onReset, label }) {
   return (
     <article className="card">
@@ -103,14 +99,10 @@ PlayerPreview.propTypes = {
 };
 
 export default class Battle extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      playerOne: null,
-      playerTwo: null,
-    };
-  }
+  state = {
+    playerOne: null,
+    playerTwo: null,
+  };
 
   handleSubmit = (id, player) => {
     this.setState({

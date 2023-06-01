@@ -11,13 +11,18 @@ const styles = {
 };
 
 class Delayed extends React.Component {
-  constructor(props) {
-    super(props);
+  state = {
+    show: false,
+  };
 
-    this.state = {
-      show: false,
-    };
-  }
+  static propTypes = {
+    wait: PropTypes.number.isRequired,
+    children: PropTypes.node.isRequired,
+  };
+
+  static defaultProps = {
+    wait: 300,
+  };
 
   componentDidMount() {
     this.timeout = setTimeout(() => {
@@ -36,23 +41,20 @@ class Delayed extends React.Component {
   }
 }
 
-Delayed.propTypes = {
-  wait: PropTypes.number.isRequired,
-  children: PropTypes.node.isRequired,
-};
-
-Delayed.defaultProps = {
-  wait: 300,
-};
-
 export default class Loading extends React.Component {
-  constructor(props) {
-    super(props);
+  state = {
+    content: this.props.text,
+  };
 
-    this.state = {
-      content: props.text,
-    };
-  }
+  static propTypes = {
+    text: PropTypes.string.isRequired,
+    speed: PropTypes.number.isRequired,
+  };
+
+  static defaultProps = {
+    text: 'Loading',
+    speed: 300,
+  };
 
   componentDidMount() {
     const { speed, text } = this.props;
@@ -77,13 +79,3 @@ export default class Loading extends React.Component {
     );
   }
 }
-
-Loading.propTypes = {
-  text: PropTypes.string.isRequired,
-  speed: PropTypes.number.isRequired,
-};
-
-Loading.defaultProps = {
-  text: 'Loading',
-  speed: 300,
-};
