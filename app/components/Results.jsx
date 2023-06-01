@@ -1,6 +1,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 
+import Loading from './Loading';
 import { battle } from '../utils/api';
 
 function Card({ profile }) {
@@ -100,7 +101,7 @@ export default class Battle extends React.Component {
     const { winner, loser, error, loading } = this.state;
 
     if (loading) {
-      return <i>Loading</i>;
+      return <Loading text="Battling" />;
     }
 
     if (error) {
