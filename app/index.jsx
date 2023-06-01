@@ -1,5 +1,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom/client';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
 import './index.css';
 import Popular from './components/Popular';
 import Battle from './components/Battle';
@@ -7,12 +9,16 @@ import Battle from './components/Battle';
 class App extends React.Component {
   render() {
     return (
-      <div className="light">
-        <div className="container">
-          <Popular />
-          {/* <Battle /> */}
+      <Router>
+        <div className="light">
+          <div className="container">
+            <Routes>
+              <Route path="/" element={<Popular />} />
+              <Route path="/battle" element={<Battle />} />
+            </Routes>
+          </div>
         </div>
-      </div>
+      </Router>
     );
   }
 }
