@@ -1,7 +1,61 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 
+import Tooltip from './Tooltip';
 import { hashtag } from './icons';
+
+function MoreInfo({
+  created_at,
+  forked_count,
+  language,
+  updated_at,
+  watchers,
+  login,
+  type,
+}) {
+  return (
+    <ul className="tooltip stack">
+      <li className="split">
+        <span>By:</span> <span>{login}</span>
+      </li>
+      <li className="split">
+        <span>Type:</span> <span>{type}</span>
+      </li>
+      {language && (
+        <li className="split">
+          <span>Language:</span> <span>{language}</span>
+        </li>
+      )}
+      <li className="split">
+        <span>Created:</span>{' '}
+        <span>{new Date(created_at).toLocaleDateString()}</span>
+      </li>
+      <li className="split">
+        <span>Updated:</span>{' '}
+        <span>{new Date(updated_at).toLocaleDateString()}</span>
+      </li>
+      <li className="split">
+        <span>Watchers:</span>
+        <span>{watchers.toLocaleString()}</span>
+      </li>
+      {forked_count && (
+        <li className="split">
+          <span>Forked:</span> <span>{forked_count.toLocaleString()}</span>
+        </li>
+      )}
+    </ul>
+  );
+}
+
+MoreInfo.propTypes = {
+  created_at: PropTypes.string.isRequired,
+  forked_count: PropTypes.number,
+  language: PropTypes.string,
+  updated_at: PropTypes.string.isRequired,
+  watchers: PropTypes.number.isRequired,
+  login: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+};
 
 function TableHead() {
   return (
@@ -24,23 +78,42 @@ function TableRow({
   forks,
   open_issues,
   name,
+  created_at,
+  forked_count,
+  language,
+  updated_at,
+  watchers,
 }) {
-  const { login, avatar_url } = owner;
+  const { login, avatar_url, type } = owner;
 
   return (
     <tr>
       <td>{index + 1}</td>
       <td>
-        <div className="row gap-md">
-          <img
-            width={32}
-            height={32}
-            className="avatar"
-            src={avatar_url}
-            alt={`Avatar for ${login}`}
-          />
-          <a href={`https://github.com/${login}/${name}`}>{name}</a>
-        </div>
+        <Tooltip
+          element={
+            <MoreInfo
+              created_at={created_at}
+              forked_count={forked_count}
+              language={language}
+              updated_at={updated_at}
+              watchers={watchers}
+              login={login}
+              type={type}
+            />
+          }
+        >
+          <div className="row gap-md">
+            <img
+              width={32}
+              height={32}
+              className="avatar"
+              src={avatar_url}
+              alt={`Avatar for ${login}`}
+            />
+            <a href={`https://github.com/${login}/${name}`}>{name}</a>
+          </div>
+        </Tooltip>
       </td>
       <td>{stargazers_count.toLocaleString()}</td>
       <td>{forks}</td>
