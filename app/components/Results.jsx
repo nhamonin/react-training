@@ -1,7 +1,9 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import Loading from './Loading';
+import withSearchParams from './withSearchParams';
 import { battle } from '../utils/api';
 
 function Card({ profile }) {
@@ -65,7 +67,7 @@ Card.propTypes = {
   }).isRequired,
 };
 
-export default class Battle extends React.Component {
+class Results extends React.Component {
   constructor(props) {
     super(props);
 
@@ -78,7 +80,9 @@ export default class Battle extends React.Component {
   }
 
   componentDidMount() {
-    const { playerOne, playerTwo } = this.props;
+    const sp = this.props.router.searchParams;
+    const playerOne = sp.get('playerOne');
+    const playerTwo = sp.get('playerTwo');
 
     battle([playerOne, playerTwo])
       .then((players) => {
@@ -112,6 +116,9 @@ export default class Battle extends React.Component {
       <main className="stack main-stack animate-in">
         <div className="split">
           <h1>Results</h1>
+          <Link to="/battle" className="btn secondary">
+            Reset
+          </Link>
         </div>
 
         <section className="grid">
@@ -146,7 +153,4 @@ export default class Battle extends React.Component {
   }
 }
 
-Battle.propTypes = {
-  playerOne: PropTypes.string.isRequired,
-  playerTwo: PropTypes.string.isRequired,
-};
+export default withSearchParams(Results);

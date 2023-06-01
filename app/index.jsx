@@ -6,6 +6,7 @@ import './index.css';
 import Nav from './components/Nav';
 import Popular from './components/Popular';
 import Battle from './components/Battle';
+import Results from './components/Results';
 
 class App extends React.Component {
   constructor(props) {
@@ -31,6 +32,7 @@ class App extends React.Component {
             <Routes>
               <Route path="/" element={<Popular />} />
               <Route path="/battle" element={<Battle />} />
+              <Route path="/battle/results" element={<Results />} />
             </Routes>
           </div>
         </div>
